@@ -52,6 +52,11 @@ const Navbar = () => {
         </Link>
         <span>.</span>
       </div>
+      <div>
+      <a href="/instant-consultation" className="nav-link">
+    Instant Booking
+</a>
+</div>
       <div className="nav__icon" onClick={handleClick}>
         <i className={click ? "fa fa-times" : "fa fa-bars"}></i>
       </div>
