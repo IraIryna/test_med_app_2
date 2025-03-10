@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .profile-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .profile-header h1 {
+      margin: 0;
+    }
+    .edit-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .edit-button:hover {
+      background-color: #45a049;
+    }
+    .profile-details {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #61B6CD;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <h1>Welcome, <span id="user-name">Anna</span>!</h1>
+      <button id="logout-button">Logout</button>
+    </div>
+
+    <div class="profile-details">
+      <p><strong>Your Profile</strong></p>
+      <p><strong>Email:</strong> <span id="user-email">1@example.com</span></p>
+      <p><strong>Phone:</strong> <span id="user-phone">12-34-56-78-90</span></p>
+    </div>
+
+    <button class="edit-button" id="edit-profile-button">Edit</button>
+
+    <form id="profile-form" style="display: none;">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" />
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" name="phone" />
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <script>
+    const API_URL = 'https://irasemenikhi-5500.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/';
+
+    const userNameSpan = document.getElementById('user-name');
+    const userEmailSpan = document.getElementById('user-email');
+    const userPhoneSpan = document.getElementById('user-phone');
+    const profileForm = document.getElementById('profile-form');
+    const editProfileButton = document.getElementById('edit-profile-button');
+    const logoutButton = document.getElementById('logout-button');
+
+    // Fetch user profile without checking login status
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch(`${API_URL}api/auth/user`);
+
+        if (response.ok) {
+          const user = await response.json();
+          userNameSpan.textContent = user.name;
+          userEmailSpan.textContent = user.email;
+          userPhoneSpan.textContent = user.phone;
+        } else {
+          alert('Error fetching user profile');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Error fetching user profile');
+      }
+    };
+
+    const handleLogout = () => {
+      alert("You have logged out.");
+      // Optionally reset any local storage/session storage here if needed
+    };
+
+    const handleEditProfile = () => {
+      profileForm.style.display = 'block';
+      document.getElementById('email').value = userEmailSpan.textContent;
+      document.getElementById('phone').value = userPhoneSpan.textContent;
+      editProfileButton.style.display = 'none';
+    };
+
+    const handleSaveProfile = async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      try {
+        const response = await fetch(`${API_URL}api/auth/user`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, phone }),
+        });
+
+        if (response.ok) {
+          alert('Profile updated successfully!');
+          userEmailSpan.textContent = email;
+          userPhoneSpan.textContent = phone;
+          profileForm.style.display = 'none';
+          editProfileButton.style.display = 'block';
+        } else {
+          alert('Error updating profile');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Error updating profile');
+      }
+    };
+
+    // Event listeners
+    editProfileButton.addEventListener('click', handleEditProfile);
+    profileForm.addEventListener('submit', handleSaveProfile);
+    logoutButton.addEventListener('click', handleLogout);
+
+    // Fetch user profile data on page load
+    fetchUserProfile();
+  </script>
+
+</body>
+</html>
