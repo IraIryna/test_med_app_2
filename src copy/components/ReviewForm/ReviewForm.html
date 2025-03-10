@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Form</title>
+  <style>
+    .review-form-container {
+      margin: 20px;
+    }
+
+    .show-feedback-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .review-form {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+
+    .review-form h3 {
+      margin-bottom: 20px;
+    }
+
+    .rating-section, .comments-section {
+      margin-bottom: 15px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .submit-button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="review-form-container">
+    <!-- Button to show the review form -->
+    <button id="show-feedback-button" class="show-feedback-button">
+      Click here
+    </button>
+
+    <!-- Feedback Form -->
+    <form id="review-form" class="review-form" style="display: none;">
+      <h3>Give your review</h3>
+      <div class="rating-section">
+        <label for="rating">Rate your consultation (1 to 5):</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" required />
+      </div>
+      <div class="comments-section">
+        <label for="comments">Additional Comments:</label>
+        <textarea id="comments" name="comments" placeholder="Write your comments here..."></textarea>
+      </div>
+      <button type="submit" class="submit-button">Share review</button>
+    </form>
+  </div>
+
+  <script>
+    // Get elements
+    const showFeedbackButton = document.getElementById("show-feedback-button");
+    const reviewForm = document.getElementById("review-form");
+    const ratingInput = document.getElementById("rating");
+    const commentsInput = document.getElementById("comments");
+
+    // Toggle feedback form visibility
+    showFeedbackButton.addEventListener("click", function() {
+      reviewForm.style.display = reviewForm.style.display === "none" ? "block" : "none";
+    });
+
+    // Handle form submission
+    reviewForm.addEventListener("submit", function(event) {
+      event.preventDefault();  // Prevent page reload
+
+      const rating = ratingInput.value;
+      const comments = commentsInput.value;
+
+      // Log feedback or send it to a server (you can replace this with an API call)
+      console.log('Rating:', rating);
+      console.log('Comments:', comments);
+
+      // Reset form after submission
+      ratingInput.value = "";
+      commentsInput.value = "";
+      reviewForm.style.display = "none";  // Hide form after submission
+    });
+  </script>
+
+</body>
+</html>

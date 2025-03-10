@@ -1,6 +1,9 @@
-// Following code has been commented with appropriate comments for your reference.
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
+import Login from './Login'; // Ensure Login component is imported
+import SignUp from './SignUp'; // Ensure SignUp component is imported
+import InstantConsultation from './InstantConsultation'; // Ensure InstantConsultation component is imported
 
 // Function component Notification to display user notifications
 const Notification = ({ children }) => {
@@ -38,7 +41,7 @@ const Notification = ({ children }) => {
   return (
     <div>
       {/* Render Navbar component */}
-      <Navbar ></Navbar>
+      <Navbar />
       {/* Render children components */}
       {children}
       {/* Display appointment details if user is logged in and appointmentData is available */}
@@ -60,5 +63,23 @@ const Notification = ({ children }) => {
   );
 };
 
-// Export Notification component for use in other parts of the application
-export default Notification;
+// Main App component to handle routing
+const App = () => {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Notification>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/instant-consultation" element={<InstantConsultation />} />
+            {/* Replace <component_route> and <component_name> with actual route and component */}
+            <Route path="<component_route>" element={<component_name />} />
+          </Routes>
+        </Notification>
+      </BrowserRouter>
+    </div>
+  );
+}
+
+export default App;
