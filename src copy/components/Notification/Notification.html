@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const storedUsername = sessionStorage.getItem('email');
+            const storedDoctorData = JSON.parse(localStorage.getItem('doctorData'));
+            const storedAppointmentData = storedDoctorData ? JSON.parse(localStorage.getItem(storedDoctorData.name)) : null;
+            
+            if (storedUsername) {
+                document.getElementById("username").textContent = storedUsername;
+            }
+            
+            if (storedDoctorData) {
+                document.getElementById("doctor-name").value = storedDoctorData.name;
+                document.getElementById("speciality").value = storedDoctorData.speciality || "";
+            }
+            
+            if (storedAppointmentData) {
+                document.getElementById("appointment-details").style.display = "block";
+                document.getElementById("appointment-name").value = storedAppointmentData.name || "";
+                document.getElementById("appointment-date").value = storedAppointmentData.date || "";
+                document.getElementById("time-slot").value = storedAppointmentData.timeSlot || "";
+            }
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <h2>Navbar</h2>
+    </nav>
+    
+    <div>
+        <p>Welcome, <span id="username">Guest</span></p>
+    </div>
+    
+    <div id="appointment-details" class="appointment-card" style="display: none;">
+        <div class="appointment-card__content">
+            <h3 class="appointment-card__title">Appointment Details</h3>
+            <label for="doctor-name"><strong>Doctor:</strong></label>
+            <input type="text" id="doctor-name" readonly>
+            
+            <label for="speciality"><strong>Speciality:</strong></label>
+            <input type="text" id="speciality" readonly>
+            
+            <label for="appointment-name"><strong>Name:</strong></label>
+            <input type="text" id="appointment-name">
+            
+            <label for="appointment-date"><strong>Date:</strong></label>
+            <input type="date" id="appointment-date">
+            
+            <label for="time-slot"><strong>Time Slot:</strong></label>
+            <input type="time" id="time-slot">
+        </div>
+    </div>
+</body>
+</html>
