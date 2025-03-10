@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Doctor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search doctor by speciality">
+        <button id="search-button">Search</button>
+    </div>
+    
+    <script>
+        document.getElementById("search-button").addEventListener("click", function() {
+            const searchText = document.getElementById("search-input").value;
+            console.log("Searching for:", searchText);
+            // Здесь можно добавить дополнительную логику поиска
+        });
+    </script>
+</body>
+</html>
